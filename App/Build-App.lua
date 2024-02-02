@@ -1,44 +1,46 @@
 -- (c) Spyridon Zervos
 
 
-project('CartesianCoordinatesTest')
-kind('ConsoleApp')
-language('C++')
-cppdialect('C++20')
-staticruntime('on')
-targetdir('bin/%{cfg.buildcfg}')
-debugdir('%{wks.location}')
+project "CartesianCoordinatesApp"
+    kind "ConsoleApp"
+    language "C++"
+    cppdialect "C++20"
+    targetdir "Binaries/%{cfg.buildcfg}"
+    staticruntime "off"
 
-files({
-    '../inc/**.h',
-    '../src/**.cpp'
-})
+    files { "Source/**.h", "Source/**.cpp" }
 
-includedirs({
-    '../inc',
-    '../src'
-})
+    includedirs
+    {
+        "Source",
+        "../Core/Source"
+    }
 
-targetdir('../bin/' .. outputdir .. '/%{prj.name}')
-objdir('../bin-int/' .. outputdir .. '/%{prj.name}')
+    links
+    {
+        "Core"
+    }
 
-filter('system:windows')
-systemversion('latest')
-defines({ 'RT_PLATFORM_WINDOWS' })
+    targetdir ("../Binaries/" .. OutputDir .. "/%{prj.name}")
+    objdir ("../Binaries/Intermediates/" .. OutputDir .. "/%{prj.name}")
 
-filter('configurations:Debug')
-defines({ 'RT_DEBUG' })
-runtime('Debug')
-symbols('On')
+    filter "system:windows"
+    systemversion "latest"
+    defines { "WINDOWS" }
 
-filter('configurations:Release')
-defines({ 'RT_RELEASE' })
-runtime('Release')
-optimize('On')
-symbols('On')
+filter "configurations:Debug"
+    defines { "DEBUG" }
+    runtime "Debug"
+    symbols "On"
 
-filter('configurations:Dist')
-defines({ 'RT_DIST' })
-runtime('Release')
-optimize('Speed')
-symbols('Off')
+filter "configurations:Release"
+    defines { "RELEASE" }
+    runtime "Release"
+    optimize "On"
+    symbols "On"
+
+filter "configurations:Dist"
+    defines { "DIST" }
+    runtime "Release"
+    optimize "On"
+    symbols "Off"
