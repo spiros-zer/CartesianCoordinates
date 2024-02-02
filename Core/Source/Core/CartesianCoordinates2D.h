@@ -5,7 +5,7 @@
 
 #include <string>
 
-struct CartesianCoordinates
+struct CartesianCoordinates2D
 {
     double x;
     
@@ -14,8 +14,8 @@ struct CartesianCoordinates
     /** @brief Magnitude of (x, y) or its distance from origin (0, 0) */  
     double modulus;
 
-    CartesianCoordinates(double InX, double InY);
-    CartesianCoordinates();
+    CartesianCoordinates2D(double InX, double InY);
+    CartesianCoordinates2D();
 
     double GetX() const {return x;}
     void SetX(double InX) {x = InX;}
@@ -27,9 +27,9 @@ struct CartesianCoordinates
     void SetModulus(double InModulus) {modulus = InModulus;}
 
     /** Operator Overloading */
-    CartesianCoordinates operator+(const CartesianCoordinates& Point) const;
+    CartesianCoordinates2D operator+(const CartesianCoordinates2D& Point) const;
 
-    CartesianCoordinates operator-(const CartesianCoordinates& Point) const;
+    CartesianCoordinates2D operator-(const CartesianCoordinates2D& Point) const;
 
     /** @brief Converts the cartesian coordinates to a std::string. */
     std::string ToString() const;
