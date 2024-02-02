@@ -1,7 +1,7 @@
 -- (c) Spyridon Zervos
 
 
-project('PolarCoordinatesTest')
+project('CartesianCoordinatesTest')
 kind('ConsoleApp')
 language('C++')
 cppdialect('C++20')

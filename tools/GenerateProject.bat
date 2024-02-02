@@ -3,7 +3,7 @@
 
 @echo off
 pushd ..
-external\premake\premake5.exe --file=premake5.lua vs2022
+external\premake\premake5.exe --file=Build.lua vs2022
 popd
 
 pause
