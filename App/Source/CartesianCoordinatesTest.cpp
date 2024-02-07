@@ -3,7 +3,7 @@
 
 #include<iostream>
 
-#include "Core/CartesianCoordinates.h"
+#include "CartesianCoordinates/Core/Source/Core/CartesianCoordinates.h"
 
 int main(int argc, char* argv[])
 {
