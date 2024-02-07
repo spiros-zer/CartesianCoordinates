@@ -7,9 +7,9 @@
 
 struct CartesianCoordinates2D
 {
-    double x;
+    double X;
     
-    double y;
+    double Y;
 
     /** @brief Magnitude of (x, y) or its distance from origin (0, 0) */  
     double modulus;
@@ -17,20 +17,22 @@ struct CartesianCoordinates2D
     CartesianCoordinates2D(double InX, double InY);
     CartesianCoordinates2D();
 
-    double GetX() const {return x;}
-    void SetX(double InX) {x = InX;}
+    [[nodiscard]] double GetX() const {return X;}
+    void SetX(double InX) {X = InX;}
 
-    double GetY() const {return y;}
-    void SetY(double InY) {y = InY;}
+    [[nodiscard]] double GetY() const {return Y;}
+    void SetY(double InY) {Y = InY;}
 
-    double Abs() const {return modulus;}
+    [[nodiscard]] double Abs() const {return modulus;}
+    [[nodiscard]] double GetModulus() const {return Abs();}
     void SetModulus(double InModulus) {modulus = InModulus;}
 
     /** Operator Overloading */
     CartesianCoordinates2D operator+(const CartesianCoordinates2D& Point) const;
-
     CartesianCoordinates2D operator-(const CartesianCoordinates2D& Point) const;
 
     /** @brief Converts the cartesian coordinates to a std::string. */
     std::string ToString() const;
+    char* ToString(int Precision, int& InSize) const;
+    char* DoubleToCstring(double InNum, int Precision, int& Size) const;
 };
