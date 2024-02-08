@@ -7,35 +7,36 @@
 
 int main(int argc, char* argv[])
 {
+    /** INITIALIZATION TESTING */
+    std::cout << "/** INITIALIZATION TESTING */" << '\n';
+    
     const CartesianCoordinates2D PointA(-0.56, -77.34);
-    const CartesianCoordinates2D PointB(2.57, 100);
-    CartesianCoordinates2D PointC{};
-    int SizeA{}, SizeB{}, SizeC{};
-
     std::cout << "PointA ";
-    const char* PointAStr = PointA.ToString(SizeA);
-    for (int i = 0; i < SizeA; ++i)
-    {
-        std::cout << PointAStr[i];
-    }
+    PointA.Print();
     std::cout << '\n';
     
+    const CartesianCoordinates2D PointB(2.57, 100);
     std::cout << "PointB ";
-    const char* PointBStr = PointB.ToString(SizeB);
-    for (int i = 0; i < SizeB; ++i)
-    {
-        std::cout << PointBStr[i];
-    }
+    PointB.Print();
     std::cout << '\n';
-
-    PointC = PointA + PointB;
+    
+    CartesianCoordinates2D PointC{};
     std::cout << "PointC ";
-    const char* PointCStr = PointC.ToString(SizeC);
-    for (int i = 0; i < SizeC; ++i)
-    {
-        std::cout << PointCStr[i];
-    }
+    PointC.Print();
     std::cout << '\n';
 
+    /** OPERATOR TESTING */
+    std::cout << "/** OPERATOR TESTING */" << '\n';
+
+    PointC = PointA - PointB;
+    std::cout << "PointC = PointA - PointB = ";
+    PointC.Print();
+    std::cout << '\n';
+    
+    const CartesianCoordinates2D PointD = PointA + PointC;
+    std::cout << "PointD = PointA + PointC =";
+    PointD.Print();
+    std::cout << '\n';
+    
     return 0;
 }
