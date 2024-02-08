@@ -7,9 +7,7 @@
 
 struct CartesianCoordinates2D
 {
-    double X;
-    
-    double Y;
+    double X, Y;
 
     /** @brief Magnitude of (x, y) or its distance from origin (0, 0) */  
     double modulus;
@@ -27,12 +25,17 @@ struct CartesianCoordinates2D
     [[nodiscard]] double GetModulus() const {return Abs();}
     void SetModulus(double InModulus) {modulus = InModulus;}
 
-    /** Operator Overloading */
+    /** OPERATOR OVERLOADING */
     CartesianCoordinates2D operator+(const CartesianCoordinates2D& Point) const;
     CartesianCoordinates2D operator-(const CartesianCoordinates2D& Point) const;
 
+    /** STRING OPERATIONS */
     /** @brief Converts the cartesian coordinates to a std::string. */
     std::string ToString() const;
-    char* ToString(int Precision, int& InSize) const;
-    char* DoubleToCstring(double InNum, int Precision, int& Size) const;
+
+    /** @brief Converts double to char* */
+    char* DoubleToCstring(double InNum, int& Size, int Precision = 2) const;
+
+    /** @brief Converts cartesian coordinate to char* */
+    char* ToString(int& InSize, int Precision = 2) const;
 };

@@ -34,40 +34,43 @@ std::string CartesianCoordinates2D::ToString() const
     return OutputStringStream.str();
 }
 
-char* CartesianCoordinates2D::ToString(int Precision, int& InSize) const
+char* CartesianCoordinates2D::ToString(int& InSize, int Precision) const
 {
     int SizeX{0}, SizeY{0};
-    char* XToCString = DoubleToCstring(X, Precision, SizeX);
-    char* YToCString = DoubleToCstring(Y, Precision, SizeY);
+    
+    char* XToCString = DoubleToCstring(X, SizeX, Precision);
+    char* YToCString = DoubleToCstring(Y, SizeY, Precision);
 
     const int TotalSize = SizeX + SizeY - 1 + /*parenthesis*/ 2 + /*comma*/ 1;
     char* Result = new char[TotalSize];
 
+    /** STRUCTURING RESULT */
     Result[0] = '(';
     Result[TotalSize - 2] = ')';
-
     int j = 1;
-    for (; j < SizeX; ++j)
+    for (; j < SizeX; j++)
     {
-        Result[j] = XToCString[j];
+        Result[j] = XToCString[j-1];
     }
-
-    for (int i = 1; i < SizeY - 1; ++i)
+    Result[j++] = ',';
+    for (int i = 0; i < SizeY - 1; i++)
     {
         Result[j++] = YToCString[i];
     }
+    Result[TotalSize - 1] = '\0';
     
     InSize = TotalSize;
-    return XToCString;
+    return Result;
 }
 
-char* CartesianCoordinates2D::DoubleToCstring(double InNum, int Precision, int& Size) const
+char* CartesianCoordinates2D::DoubleToCstring(double InNum, int& Size, int Precision) const
 {
-    const bool bIsNegative = InNum > 1 ? 0 : 1;
-    int IntDigits{bIsNegative}, DecDigits{0}, Digits{0}, Part{};
+    const bool bIsNegative = InNum >= 0 ? 0 : 1;
+    bool bIsIntPartNull{false}, bIsDecPartNull{false};
+    int IntDigits{0}, DecDigits{0}, Digits{0};
 
     /** DIGITS CALCULATION */
-    Part = /*IntPart*/ static_cast<int>(InNum);
+    int Part = /*IntPart*/ static_cast<int>(InNum);
     while (Part)
     {
         Part /= 10;
@@ -81,37 +84,53 @@ char* CartesianCoordinates2D::DoubleToCstring(double InNum, int Precision, int& 
         ++DecDigits;
     }
 
-    Digits += /*'-'*/ (InNum < 0 ? 1 : 0) + IntDigits + /*'.'*/ 1 + DecDigits + /*'\0'*/ 1;
-    Size = Digits;
+    if (!IntDigits)
+    {
+        bIsIntPartNull = true;
+        Digits++;
+    }
+
+    if (!DecDigits)
+    {
+        bIsDecPartNull = true;
+        Digits++;
+    }
+    
+    Digits += /*'-'*/ (bIsNegative ? 1 : 0) + IntDigits + /*'.'*/ 1 + DecDigits + /*'\0'*/ 1;
 
     /** DIGITS EMPLACEMENT */
     char* Result = new char[Digits];
 
-    if (InNum < 0)
-    {
+    if (bIsNegative)
         Result[0] = '-';
-    }
 
+    if (bIsIntPartNull)
+        Result[(bIsNegative ? 1 : 0)] = '0';
+    
+    if (bIsDecPartNull)
+        Result[(bIsIntPartNull ? 1 : IntDigits) + (bIsNegative ? 1 : 0) + 1] = '0';
+    
     Part = static_cast<int>(abs(InNum));
-    for (int i = IntDigits; i > 0; --i)
+    for (int i = IntDigits; i > 0; i--)
     {
         const int Digit = (Part - Part % static_cast<int>(pow(10, i - 1))) / static_cast<int>(pow(10, i - 1));
         Part = Part % static_cast<int>(pow(10, i - 1));
-        Result[IntDigits - i] = '0' + Digit;
+        Result[IntDigits + (bIsNegative ? 1 : 0) - i] = '0' + Digit;
     }
 
-    Result[IntDigits + (bIsNegative ? 1 : 0)] = '.';
+    Result[(bIsIntPartNull ? 1 : IntDigits) + (bIsNegative ? 1 : 0)] = '.';
     
     Part = static_cast<int>(abs((InNum - static_cast<int>(InNum))) * pow(10, Precision));
-    for (int i = DecDigits; i > 0; --i)
+    for (int i = DecDigits; i > 0; i--)
     {
         const int Digit = (Part - Part % static_cast<int>(pow(10, i - 1))) / static_cast<int>(pow(10, i - 1));
         Part = Part % static_cast<int>(pow(10, i - 1));
-        Result[IntDigits + 1 + (bIsNegative ? 1 : 0) + DecDigits - i] = '0' + Digit;
+        Result[(bIsIntPartNull ? 1 : IntDigits) + 1 + (bIsNegative ? 1 : 0) + DecDigits - i] = '0' + Digit;
     }
 
     /** NULL CHARACTER */
     Result[Digits - 1] = '\0';
-    
+
+    Size = Digits;
     return Result;
 }
