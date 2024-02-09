@@ -49,9 +49,6 @@ struct CartesianCoordinates2D
     /** @brief Converts the cartesian coordinates to a std::string. */
     std::string ToString() const;
 
-    /** @brief Converts double to char*. */
-    char* DoubleToCstring(double InNum, int& Size, int Precision = 2) const;
-
     /** @brief Converts cartesian coordinate to char*. */
     char* ToString(int& InSize, int Precision = 2) const;
 

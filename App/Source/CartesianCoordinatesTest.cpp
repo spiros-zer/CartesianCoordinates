@@ -10,7 +10,7 @@ int main(int argc, char* argv[])
     /** INITIALIZATION TESTING */
     std::cout << "/** INITIALIZATION TESTING */" << '\n';
     
-    const CartesianCoordinates2D PointA(-0.56, -77.34);
+    const CartesianCoordinates2D PointA(-0.56, -10.09);
     std::cout << "PointA ";
     PointA.Print();
     std::cout << '\n';
