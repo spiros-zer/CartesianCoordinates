@@ -28,8 +28,8 @@ int main(int argc, char* argv[])
     /** OPERATOR TESTING */
     std::cout << "/** OPERATOR TESTING */" << '\n';
 
-    PointC = PointA - PointB;
-    std::cout << "PointC = PointA - PointB = ";
+    PointC = PointB - PointA;
+    std::cout << "PointC = PointB - PointA = ";
     PointC.Print();
     std::cout << '\n';
     
