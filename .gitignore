@@ -41,3 +41,4 @@ Binaries/
 
 # Exclusions
 !External/premake/premake5.exe
+/Core/Core.vcxproj.filters
