@@ -6,7 +6,8 @@
 #include <iostream>
 
 #include "CartesianCoordinates2D.h"
-#include "Converters/Core/Source/Core/Double2Cstring.h"
+
+#include "Converters/Double2Cstring.h"
 
 CartesianCoordinates2D::CartesianCoordinates2D(double InX, double InY)
 {
