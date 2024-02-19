@@ -11,13 +11,13 @@ struct CartesianCoordinates2D
     double X{}, Y{};
     
     /** @brief Array containing the coordinate pair. */
-    char* Cstring;
+    char* Cstring{};
     
     /** @brief Size of the array. */
     int Size{};
 
     /** @brief Magnitude of (x, y) or its distance from origin (0, 0). */  
-    double modulus{};
+    double Modulus{};
 
     /**** CONSTRUCTORS/DESTRUCTORS */
     CartesianCoordinates2D(double InX, double InY);
@@ -30,9 +30,9 @@ struct CartesianCoordinates2D
     [[nodiscard]] double GetY() const {return Y;}
     void SetY(double InY) {Y = InY;}
 
-    [[nodiscard]] double Abs() const {return modulus;}
+    [[nodiscard]] double Abs() const {return Modulus;}
     [[nodiscard]] double GetModulus() const {return Abs();}
-    void SetModulus(double InModulus) {modulus = InModulus;}
+    void SetModulus(double InModulus) {Modulus = InModulus;}
 
     [[nodiscard]] int GetCstringSize() const {return Size;}
     void SetSize(int InSize) {Size = InSize;}
